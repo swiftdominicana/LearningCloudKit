@@ -9,23 +9,26 @@
 /* Begin PBXBuildFile section */
 		EE148E5F23F4DC610097E95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE148E5E23F4DC610097E95A /* AppDelegate.swift */; };
 		EE148E6123F4DC610097E95A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE148E6023F4DC610097E95A /* SceneDelegate.swift */; };
-		EE148E6323F4DC610097E95A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE148E6223F4DC610097E95A /* ViewController.swift */; };
 		EE148E6623F4DC610097E95A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE148E6423F4DC610097E95A /* Main.storyboard */; };
 		EE148E6923F4DC610097E95A /* learningCloudKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE148E6723F4DC610097E95A /* learningCloudKit.xcdatamodeld */; };
 		EE148E6B23F4DC620097E95A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE148E6A23F4DC620097E95A /* Assets.xcassets */; };
 		EE148E6E23F4DC620097E95A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE148E6C23F4DC620097E95A /* LaunchScreen.storyboard */; };
+		EE148E7823F4DC7C0097E95A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE148E7723F4DC7C0097E95A /* CloudKit.framework */; };
+		EE148E7A23F4F0390097E95A /* CartoonsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE148E7923F4F0390097E95A /* CartoonsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EE148E5B23F4DC610097E95A /* learningCloudKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = learningCloudKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE148E5E23F4DC610097E95A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE148E6023F4DC610097E95A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EE148E6223F4DC610097E95A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EE148E6523F4DC610097E95A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EE148E6823F4DC610097E95A /* learningCloudKit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = learningCloudKit.xcdatamodel; sourceTree = "<group>"; };
 		EE148E6A23F4DC620097E95A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE148E6D23F4DC620097E95A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE148E6F23F4DC620097E95A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE148E7523F4DC770097E95A /* learningCloudKit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = learningCloudKit.entitlements; sourceTree = "<group>"; };
+		EE148E7723F4DC7C0097E95A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		EE148E7923F4F0390097E95A /* CartoonsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE148E7823F4DC7C0097E95A /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +48,7 @@
 			children = (
 				EE148E5D23F4DC610097E95A /* learningCloudKit */,
 				EE148E5C23F4DC610097E95A /* Products */,
+				EE148E7623F4DC7C0097E95A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,16 +63,25 @@
 		EE148E5D23F4DC610097E95A /* learningCloudKit */ = {
 			isa = PBXGroup;
 			children = (
+				EE148E7523F4DC770097E95A /* learningCloudKit.entitlements */,
 				EE148E5E23F4DC610097E95A /* AppDelegate.swift */,
 				EE148E6023F4DC610097E95A /* SceneDelegate.swift */,
-				EE148E6223F4DC610097E95A /* ViewController.swift */,
 				EE148E6423F4DC610097E95A /* Main.storyboard */,
 				EE148E6A23F4DC620097E95A /* Assets.xcassets */,
 				EE148E6C23F4DC620097E95A /* LaunchScreen.storyboard */,
 				EE148E6F23F4DC620097E95A /* Info.plist */,
 				EE148E6723F4DC610097E95A /* learningCloudKit.xcdatamodeld */,
+				EE148E7923F4F0390097E95A /* CartoonsTableViewController.swift */,
 			);
 			path = learningCloudKit;
+			sourceTree = "<group>";
+		};
+		EE148E7623F4DC7C0097E95A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE148E7723F4DC7C0097E95A /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,8 +155,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE148E7A23F4F0390097E95A /* CartoonsTableViewController.swift in Sources */,
 				EE148E6923F4DC610097E95A /* learningCloudKit.xcdatamodeld in Sources */,
-				EE148E6323F4DC610097E95A /* ViewController.swift in Sources */,
 				EE148E5F23F4DC610097E95A /* AppDelegate.swift in Sources */,
 				EE148E6123F4DC610097E95A /* SceneDelegate.swift in Sources */,
 			);
@@ -288,6 +302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = learningCloudKit/learningCloudKit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RDV2KJUFH7;
 				INFOPLIST_FILE = learningCloudKit/Info.plist;
@@ -306,6 +321,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = learningCloudKit/learningCloudKit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RDV2KJUFH7;
 				INFOPLIST_FILE = learningCloudKit/Info.plist;
