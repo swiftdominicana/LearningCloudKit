@@ -9,11 +9,10 @@
 import UIKit
 import CoreData
 
-class CartoonsTableViewController: UITableViewController {
+final class CartoonsTableViewController: UITableViewController {
   private let apiURL = "https://rickandmortyapi.com/api/character/1,2"
   private let LOADED_KEY = "LOADED"
-  
-  var cartoons = [Cartoon]()
+  private var cartoons = [Cartoon]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,12 +23,13 @@ class CartoonsTableViewController: UITableViewController {
       self.tableView.reloadData()
     }
     else {
-      UserDefaults.standard.set(true, forKey: LOADED_KEY)
       getEpisodes { [weak self] (success) in
-        print(success)
+        guard let self = self else { return }
+
+        UserDefaults.standard.set(true, forKey: self.LOADED_KEY)
         DispatchQueue.main.async {
-          self?.cartoons = self?.fetchCartoons() ?? []
-          self?.tableView.reloadData()
+          self.cartoons = self.fetchCartoons()
+          self.tableView.reloadData()
         }
       }
     }
@@ -65,67 +65,85 @@ class CartoonsTableViewController: UITableViewController {
   private func configureCell(_ cell: UITableViewCell, with cartoon: Cartoon) {
     cell.textLabel?.text = cartoon.name
   }
-  
-  private func getEpisodes(completion: @escaping (_ success: Bool) -> Void) {
-     guard
-       let url = URL(string: apiURL) else {
-       completion(false)
-       return
-     }
+}
 
-     let session = URLSession.shared
-     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-     
-     let task = session.dataTask(with: url) { (data, _, error) in
-       
-       guard let unWrappedData = data, error == nil else {
-         completion(false)
-         return
-       }
-       
-       let context = appDelegate!.persistentContainer.viewContext
-       
+// MARK: - Cloud Service
+private extension CartoonsTableViewController {
+  func getEpisodes(completion: @escaping (_ success: Bool) -> Void) {
+    guard
+      let url = URL(string: apiURL) else {
+        completion(false)
+        return
+      }
+
+    let session = URLSession.shared
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+
+    let task = session.dataTask(with: url) { (data, _, error) in
+      guard let unWrappedData = data, error == nil else {
+        completion(false)
+        return
+      }
+
+      let context = appDelegate!.persistentContainer.viewContext
+      context.mergePolicy = NSOverwriteMergePolicy
+      context.automaticallyMergesChangesFromParent = true
       try? appDelegate?.persistentContainer.viewContext.setQueryGenerationFrom(.current)
-      
-       if let json = try! JSONSerialization.jsonObject(with: unWrappedData, options: []) as? [[String: Any]] {
-         context.perform {
-           let insertRequest = NSBatchInsertRequest(entity: Cartoon.entity(), objects: json)
-           try! context.execute(insertRequest)
-           try! context.save()
-           completion(true)
-         }
-       }
-       else {
-         completion(false)
-       }
-     }
-     
-     task.resume()
-   }
+
+      if let json = try? JSONSerialization.jsonObject(with: unWrappedData, options: []) as? [[String: Any]] {
+        let cleanup = json.map {
+          [
+            "name": $0["name"] as? String ?? "",
+            "species": $0["species"] as? String ?? "",
+            "image": $0["image"] as? String ?? "",
+            "status": $0["status"] as? String ?? ""
+          ]
+        }
+
+        context.perform {
+          let insertRequest = NSBatchInsertRequest(entity: Cartoon.entity(), objects: cleanup)
+          do {
+            let result =  try context.execute(insertRequest) as! NSBatchInsertResult
+            debugPrint(result.result as! Bool)
+          }
+          catch {
+            debugPrint(error)
+          }
+
+          try! context.save()
+          completion(true)
+        }
+      }
+      else {
+        completion(false)
+      }
+    }
+
+    task.resume()
+  }
 }
 
 // MARK: - Core Data Logic
-extension CartoonsTableViewController {
-  
-  private func currentContext() -> NSManagedObjectContext? {
+private extension CartoonsTableViewController {
+  var currentContext: NSManagedObjectContext? {
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     return appDelegate?.persistentContainer.viewContext
   }
   
   func fetchCartoons() -> [Cartoon] {
     var cartoons = [Cartoon]()
-    
     let fetchRequest: NSFetchRequest<Cartoon> = Cartoon.fetchRequest()
     
     do {
-      cartoons = try currentContext()?.fetch(fetchRequest) ?? []
+      cartoons = try currentContext?.fetch(fetchRequest) ?? []
     }
     catch {
-      print("Unexpected error")
+      print("Unexpected error: \(error)")
     }
     
     return cartoons
   }
+
   func deleteCartoon(_ cartoon: Cartoon) {
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     guard let context = appDelegate?.persistentContainer.viewContext else {
